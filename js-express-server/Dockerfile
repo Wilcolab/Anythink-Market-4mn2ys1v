@@ -1,12 +1,11 @@
 FROM node:14
 
+FROM node:14
+
 WORKDIR /app
 
-COPY package.json ./
-COPY yarn.lock ./
-
+COPY package*.json /app
 RUN yarn install
+EXPOSE 8001
 
-COPY src ./src
-
-CMD ["yarn", "start"]
+CMD [ "yarn", "start" ]
