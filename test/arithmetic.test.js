@@ -93,7 +93,56 @@ describe('Arithmetic', function () {
         });
     });
 
-// TODO: Challenge #1
+describe('Power', function () {
+    it('raises a positive integer to a positive integer power', function (done) {
+        request.get('/arithmetic?operation=power&operand1=2&operand2=5')
+            .expect(200)
+            .end(function (err, res) {
+                expect(res.body).to.eql({ result: 32 });
+                done();
+            });
+    });
+    it('any number to the power of zero is one', function (done) {
+        request.get('/arithmetic?operation=power&operand1=42&operand2=0')
+            .expect(200)
+            .end(function (err, res) {
+                expect(res.body).to.eql({ result: 1 });
+                done();
+            });
+    });
+    it('handles negative exponent producing fractional result', function (done) {
+        request.get('/arithmetic?operation=power&operand1=2&operand2=-1')
+            .expect(200)
+            .end(function (err, res) {
+                expect(res.body).to.eql({ result: 0.5 });
+                done();
+            });
+    });
+    it('handles negative base with even exponent', function (done) {
+        request.get('/arithmetic?operation=power&operand1=-2&operand2=2')
+            .expect(200)
+            .end(function (err, res) {
+                expect(res.body).to.eql({ result: 4 });
+                done();
+            });
+    });
+    it('handles negative base with odd exponent', function (done) {
+        request.get('/arithmetic?operation=power&operand1=-2&operand2=3')
+            .expect(200)
+            .end(function (err, res) {
+                expect(res.body).to.eql({ result: -8 });
+                done();
+            });
+    });
+    it('supports fractional base in exponential notation', function (done) {
+        request.get('/arithmetic?operation=power&operand1=1.2e1&operand2=2')
+            .expect(200)
+            .end(function (err, res) {
+                expect(res.body).to.eql({ result: 144 });
+                done();
+            });
+    });
+});
  
 
     describe('Multiplication', function () {
